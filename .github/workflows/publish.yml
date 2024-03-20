@@ -13,6 +13,9 @@ jobs:
               with:
                   node-version: 14
                   registry-url: https://registry.npmjs.org
+            - name: pre-publish
+              run: npm run package
+              working-directory: ./
             - name: publish
               run: npm publish --access public
               working-directory: projects/swimlane/ngx-graph
