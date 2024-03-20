@@ -11,10 +11,10 @@ jobs:
             - name: node
               uses: actions/setup-node@v2
               with:
-                  node-version: 12
+                  node-version: 14
                   registry-url: https://registry.npmjs.org
             - name: publish
-              run: npm run build:lib:prod --access public
-              working-directory: my-package
+              run: npm publish --access public
+              working-directory: projects/swimlane/ngx-graph
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
