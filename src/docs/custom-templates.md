@@ -1,59 +1,11 @@
-# ngx-graph
+# Custom Templates
 
-[![Join the chat at https://gitter.im/swimlane/ngx-graph](https://badges.gitter.im/swimlane/ngx-graph.svg)](https://gitter.im/swimlane/ngx-graph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+ngx-graph gives you complete control over the look and behavior of your graph. You can pass custom templates for your nodes, edges, and clusters.
 
-A Graph visualization for angular
-
-## Documentation & Demos 
-https://swimlane.github.io/ngx-graph/
-
-## Installation
-1. `npm install @swimlane/ngx-graph --save`
-3. Import `NgxGraphModule` into your module
-4. Use the `ngx-graph` component in your components
-
-## Usage
-
-### Simple
-```html
+```html { playground }
 <ngx-graph
   class="chart-container"
-  [view]="[500, 200]"
-  [links]="[
-    {
-      id: 'a',
-      source: 'first',
-    target: 'second',
-      label: 'is parent of'
-    }, {
-      id: 'b',
-      source: 'first',
-      target: 'third',
-      label: 'custom label'
-    }
-  ]"
-  [nodes]="[
-    {
-      id: 'first',
-      label: 'A'
-    }, {
-      id: 'second',
-      label: 'B'
-    }, {
-      id: 'third',
-      label: 'C'
-    }
-  ]"
->
-</ngx-graph>
-```
-
-### Custom Templates
-
-```html
-<ngx-graph
-  class="chart-container"
-  [view]="[500, 550]"
+  [view]="[800, 550]"
   [links]="[
     {
       id: 'a',
@@ -164,88 +116,46 @@ https://swimlane.github.io/ngx-graph/
 </ngx-graph>
 ```
 
-## Data
+## Node Template
 
-### Nodes
-```javascript
-[
-  {
-    id: '1',
-    label: 'Node A'
-  },
-  {
-    id: '2',
-    label: 'Node B'
-  },
-  {
-    id: '3',
-    label: 'Node C'
-  },
-  {
-    id: '4',
-    label: 'Node D'
-  },
-  {
-    id: '5',
-    label: 'Node E'
-  },
-  {
-    id: '6',
-    label: 'Node F'
-  }
-]
+To define a custom template for your nodes, define a `#nodeTemplate` element as a content child of the `ngx-graph` component. Each node object is passed to the template via the `node` template context, so you can style each node based on its properties.
+
+```
+<ng-template #nodeTemplate let-node>
+  // your SVG code here
+</ng-template>
 ```
 
-### Edges
-```javascript
-[
-  {
-    id: 'a',
-    source: '1',
-    target: '2'
-  },
-  {
-    id: 'b',
-    source: '1',
-    target: '3'
-  },
-  {
-    id: 'c',
-    source: '3',
-    target: '4'
-  },
-  {
-    id: 'd',
-    source: '3',
-    target: '5'
-  },
-  {
-    id: 'e',
-    source: '4',
-    target: '5'
-  },
-  {
-    id: 'f',
-    source: '2',
-    target: '6'
-  }
-]
+## Edge Template
+
+To define a custom template for the edges, define a `#linkTemplate` element as a content child of the `ngx-graph` component. Each link object is passed to the template via the `link` template context, so you can style each link based on its properties.
+
+```
+<ng-template #linkTemplate let-link>
+  // your SVG code here
+</ng-template>
 ```
 
-### Clusters
-```javascript
-[
-  {
-    id: 'cluster0',
-    label: 'Cluster node',
-    childNodeIds: ['2', '3']
-  }
-]
+## Cluster Template
+
+To define a custom template for the cluster nodes, define a `#clusterTemplate` element as a content child of the `ngx-graph` component. Each cluster object is passed to the template via the `cluster` template context, so you can style each cluster based on its properties.
+
+```
+<ng-template #clusterTemplate let-cluster>
+  // your SVG code here
+</ng-template>
 ```
 
+## Defs Template
 
-## Credits
-`ngx-graph` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
+If you want to define SVG defs object that you can reference in the other templates, define a `#defsTemplate` element as a content of the `ngx-graph` component, and add them in it. All of the objects you define inside this template will be insterted into a `defs` SVG element, and can be referenced from the other templates of the component.
 
-[SecOps Hub](http://secopshub.com) is an open, product-agnostic, online community for security professionals to share ideas, use cases, best practices, and incident response strategies.
+```
+<ng-template #defsTemplate>
+  // your SVG defs here
+</ng-template>
+```
 
+## Custom SVG
+
+Any other SVG elements that you define inside the component will be projected into the main SVG element of the graph component.
