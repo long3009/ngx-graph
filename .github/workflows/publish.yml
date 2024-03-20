@@ -31,3 +31,9 @@ jobs:
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+      - name: pre-publish
+        run: npm run prepublish:lib
+      - name: publish
+        run: npm run publish:lib --access public
+        env:
+            NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
